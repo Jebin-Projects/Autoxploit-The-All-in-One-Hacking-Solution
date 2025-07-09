@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>System Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header>
+            <h1>System Control Panel</h1>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar (File Explorer) -->
+            <div class="sidebar" id="fileExplorer">
+                <div class="sidebar-header">
+                    <span>File Explorer</span>
+                    <button onclick="toggleSidebar()" class="toggle-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M19 13H5v-2h14v2z"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Path Navigation -->
+                <div class="path-navigation">
+                    <input type="text" id="currentPath" placeholder="Enter path...">
+                    <button class="go-button" onclick="navigatePath()">Go</button>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="breadcrumb" id="breadcrumb"></div>
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search files..." oninput="filterFiles()">
+                </div>
+                <!-- File Grid Container -->
+                <div class="file-grid-container">
+                    <div class="file-grid" id="fileGrid"></div>
+                </div>
+                <!-- File Actions -->
+                <div class="file-actions">
+                    <label for="fileInput" class="upload-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"/>
+                        </svg>
+                        Choose File
+                    </label>
+                    <input type="file" id="fileInput" hidden>
+                    <button id="uploadButton" class="upload-button" onclick="handleFileUpload()" disabled>
+                        Upload
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Features -->
+            <div class="content-panel">
+                <!-- System Stats -->
+                <div class="system-stats">
+                    <div class="stat-item" id="cpuInfo"></div>
+                    <div class="stat-item" id="memoryInfo"></div>
+                    <div class="stat-item" id="gpuInfo"></div>
+                </div>
+
+                
+
+                <!-- Command Console Pop-up -->
+                <!-- Command Console -->
+<div class="command-console" id="commandConsole">
+    <div class="console-header">
+        <span>Terminal Output</span>
+    </div>
+    <pre id="commandOutput"></pre>
+</div>
+
+<!-- Terminal Button -->
+<button class="terminal-btn" onclick="executeCommandPrompt()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/>
+    </svg>
+    Open Terminal
+</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

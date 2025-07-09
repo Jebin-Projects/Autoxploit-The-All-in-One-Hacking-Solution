@@ -1,0 +1,135 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f9ff; /* Light blue background */
+    color: #333; /* Dark text for readability */
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Heading Styling */
+h1 {
+    color: #0078d4; /* Professional blue color */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Form Container */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff; /* White card for contrast */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Form Label */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #0078d4; /* Blue color for labels */
+}
+
+/* Input Field */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #0078d4; /* Highlight border on focus */
+    outline: none;
+}
+
+/* Submit Button */
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #0078d4; /* Blue button */
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #005bb5; /* Darker blue on hover */
+}
+
+/* Loading Indicator */
+#loadingIndicator {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #0078d4; /* Blue color for loading text */
+}
+
+#loadingIndicator .spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Results Section */
+#results {
+    margin-top: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#results h3 {
+    color: #0078d4; /* Blue color for results heading */
+    margin-bottom: 10px;
+}
+
+#results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#results li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+#results li strong {
+    color: #0078d4; /* Blue color for vulnerability type */
+}
+
+/* Error Message */
+.error {
+    color: #d9534f; /* Red color for errors */
+    text-align: center;
+    margin-top: 20px;
+}

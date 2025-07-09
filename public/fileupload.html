@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Scanner</title>
+    <link rel="stylesheet" href="/css/fileupload.css">
+</head>
+<body>
+    <h1>File Upload Scanner</h1>
+    <form id="fileuploadForm">
+        <label for="uploadUrl">File Upload Endpoint:</label>
+        <input type="text" id="uploadUrl" name="uploadUrl" placeholder="http://example.com/upload" required>
+        
+        <label for="baseUrl">Base URL to Check Uploaded Files:</label>
+        <input type="text" id="baseUrl" name="baseUrl" placeholder="http://example.com/uploads" required>
+        
+        <button type="submit" class="btn">Start File Upload Scan</button>
+    </form>
+
+    <div id="loadingIndicator" style="display: none;">
+        <p>Loading... <span class="spinner">⏳</span></p>
+    </div>
+
+    <div id="results"></div>
+
+    <script src="js/fileupload_main.js"></script>
+</body>
+</html>

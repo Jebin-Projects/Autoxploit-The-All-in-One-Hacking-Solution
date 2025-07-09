@@ -1,0 +1,61 @@
+/* Dark Theme Styles */
+body.dark-mode {
+    background: #121212; /* Dark Background */
+    color: #e0e0e0; /* Light Text */
+}
+
+body.dark-mode .navbar {
+    background: #1e1e1e; /* Dark Navbar */
+}
+
+body.dark-mode .navbar a {
+    color: #e0e0e0; /* Light Text for Navbar Links */
+}
+
+body.dark-mode .navbar a:hover {
+    color: #ffcc00; /* Highlight Color for Hover */
+}
+
+body.dark-mode .hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('images/hero-bg.jpg') no-repeat center center/cover;
+    color: #e0e0e0; /* Light Text for Hero Section */
+}
+
+body.dark-mode .features,
+body.dark-mode .why-us {
+    background: #1e1e1e; /* Dark Background for Sections */
+    color: #e0e0e0; /* Light Text */
+}
+
+body.dark-mode .feature-card,
+body.dark-mode .why-us-card {
+    background: #2c2c2c; /* Slightly Lighter Background for Cards */
+    color: #e0e0e0; /* Light Text */
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Subtle Shadow for Cards */
+}
+
+body.dark-mode .footer {
+    background: #1e1e1e; /* Dark Footer Background */
+    color: #e0e0e0; /* Light Text */
+}
+
+body.dark-mode .footer-section h4 {
+    color: #ffcc00; /* Highlight Color for Headings */
+}
+
+body.dark-mode .footer-section a:hover {
+    color: #ffcc00; /* Highlight Color for Hover */
+}
+
+body.dark-mode .btn-primary {
+    background: linear-gradient(135deg, #ffcc00, #e6b800); /* Vibrant Yellow Gradient */
+    color: #2c3e50; /* Dark Text for Buttons */
+}
+
+body.dark-mode .btn-primary:hover {
+    background: #e6b800; /* Slightly Darker Yellow on Hover */
+}
+
+body.dark-mode .highlight {
+    color: #ffcc00; /* Vibrant Yellow for Highlights */
+}

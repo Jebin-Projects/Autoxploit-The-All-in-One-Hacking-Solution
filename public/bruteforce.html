@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brute-Forcing - AutoXploit</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Brute-Forcing</h1>
+        <a href="/" class="back-btn">Back to Home</a>
+    </header>
+    <main class="container">
+        <form id="bruteforceForm">
+            <label for="target">Target URL or IP:</label>
+            <input type="text" id="target" name="target" placeholder="e.g., http://example.com/login" required>
+            <label for="wordlist">Upload Wordlist:</label>
+            <input type="file" id="wordlist" name="wordlist" accept=".txt" required>
+            <button type="submit" class="btn">Start Brute-Force</button>
+        </form>
+        <div id="results"></div>
+    </main>
+    <script src="/js/main.js"></script>
+</body>
+</html>

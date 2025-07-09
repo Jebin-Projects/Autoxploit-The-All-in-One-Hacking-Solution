@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AutoXploit</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/authGuard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Redirect the user if they are already logged in
+            redirectIfLoggedIn();
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="container">
+            <a href="/" class="logo">AutoXploit</a>
+            <div id="auth-status"></div>
+            <div id="signup-dashboard"></div>
+        </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        /**
+         * Handles the login process.
+         */
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Validate input
+                if (!email || !password) {
+                    throw new Error('Email and password are required.');
+                }
+
+                // Send login request to the server
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Login failed.');
+                }
+
+                const data = await response.json();
+                const token = data.token;
+
+                // Fetch user details to get the username
+                const userResponse = await fetch('/api/auth/user', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+
+                if (!userResponse.ok) {
+                    throw new Error('Failed to fetch user details.');
+                }
+
+                const userData = await userResponse.json();
+                const username = userData.username;
+
+                // Store token and username in localStorage
+                localStorage.setItem('token', token);
+                localStorage.setItem('username', username);
+
+                // Log success message for debugging
+                console.log('Login successful. Token and username stored in localStorage.');
+
+                // Redirect to the dashboard
+                window.location.href = '/dashboard.html';
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert(`Error: ${error.message}`);
+            }
+        });
+    </script>
+</body>
+</html>

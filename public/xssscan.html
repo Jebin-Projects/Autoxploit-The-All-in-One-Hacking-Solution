@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Scanner</title>
+    <link rel="stylesheet" href="/css/xss_styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <h1>XSS Scanner</h1>
+    <form id="xssscanForm">
+        <label for="url">Target URL:</label>
+        <input type="text" id="url" name="url" placeholder="http://example.com" required>
+        <button type="submit" class="btn">Start XSS Scan</button>
+    </form>
+
+    <div id="loadingIndicator" style="display: none;">
+        <p>Loading... <span class="spinner">⏳</span></p>
+    </div>
+
+    <div id="results"></div>
+
+    <script src="/js/xss_main.js"></script>
+</body>
+</html>

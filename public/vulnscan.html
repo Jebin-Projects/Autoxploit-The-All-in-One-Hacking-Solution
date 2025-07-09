@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Scanner</title>
+    <link rel="stylesheet" href="css/results.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SQL Injection Vulnerability Scanner</h1>
+        </header>
+
+        <div class="doctor-img">
+            <img src="images/sql.png" alt="Doctor Image"> <!-- Replace with your image -->
+        </div>
+
+        <!-- Form Section -->
+       <!-- Form Section -->
+<!-- Form Section -->
+<div class="form-section">
+    <form id="vulnscanForm">
+        <label for="url">Enter URL to Scan:</label>
+        <input type="url" id="url" name="url" placeholder="Enter the URL" required>
+        
+
+
+        <button type="submit" class="submit-btn">Start Scan</button>
+    </form>
+    <!-- Loading indicator and scanning message -->
+    <div id="loadingIndicator" class="loading" style="display:none;">Loading...</div> <!-- Loading indicator -->
+    <div id="scanningText" class="scanning-text" style="display:none;">Scanning for SQL Injection vulnerabilities...</div> <!-- Scanning message -->
+</div>
+
+        <!-- Results Section -->
+        <div id="results"></div>
+    </div>
+
+    <script src="js/main.js"></script> <!-- Link to your JS file -->
+</body>
+</html>

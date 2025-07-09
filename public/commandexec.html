@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Execution Scanner</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Command Execution Scanner</h1>
+    <form id="commandexecForm">
+        <label for="url">Target URL:</label>
+        <input type="text" id="url" name="url" placeholder="http://example.com" required>
+        <button type="submit" class="btn">Start Command Execution Scan</button>
+    </form>
+
+    <div id="loadingIndicator" style="display: none;">
+        <p>Loading... <span class="spinner">⏳</span></p>
+    </div>
+
+    <div id="results"></div>
+
+    <script src="/js/commandexec_main.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results - AutoXploit</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/scan-results.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo"><i class="fas fa-shield-alt"></i> <span class="highlight">AutoXploit</span></a>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Back to Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Scan Details</h2>
+        <div id="scanDetails" class="scan-details-card"></div>
+
+        <div id="additionalInfo" class="additional-info hidden">
+            <h3>Vulnerability Info</h3>
+            <p id="vulnDescription">Loading...</p>
+
+            <h3>Mitigation</h3>
+            <p id="mitigationTips">Loading...</p>
+        </div>
+    </div>
+
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const scanId = params.get('id');
+            const token = localStorage.getItem('token');
+
+            if (!scanId || !token) {
+                alert('Missing scan ID or authentication.');
+                window.location.href = '/dashboard.html';
+                return;
+            }
+
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'flex';
+
+            try {
+                const response = await fetch(`/api/scans/${scanId}`, {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+
+                if (!response.ok) throw new Error(`Failed to fetch scan. Status: ${response.status}`);
+
+                const scan = await response.json();
+                const detailsDiv = document.getElementById('scanDetails');
+
+                let detailsHTML = `
+                    <p><strong>Scan Name:</strong> ${DOMPurify.sanitize(scan.scan_name)}</p>
+                    <p><strong>Category:</strong> ${DOMPurify.sanitize(scan.category)}</p>
+                    <p><strong>Target URL:</strong> ${DOMPurify.sanitize(scan.target_url)}</p>
+                    <p><strong>Tool Used:</strong> ${DOMPurify.sanitize(scan.tool_used)}</p>
+                    <p><strong>Status:</strong> ${scan.is_vulnerable ? 'Vulnerable' : 'Safe'}</p>
+                    <p><strong>Details:</strong></p>
+                    <pre class="scan-output">${DOMPurify.sanitize(scan.details || 'No details available.')}</pre>
+                `;
+
+                detailsDiv.innerHTML = detailsHTML;
+
+                // If no scan details, fetch vulnerability info
+                
+
+            } catch (err) {
+                alert(`Error loading scan: ${err.message}`);
+                console.error(err);
+            } finally {
+                loadingSpinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

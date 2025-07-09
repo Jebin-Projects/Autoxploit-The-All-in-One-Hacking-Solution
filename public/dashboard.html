@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AutoXploit</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+    <script src="js/authGuard.js"></script>
+
+    <style>
+        .truncate-text {
+            display: inline-block;
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            requireAuth();
+            fetchScans();
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo"><i class="fas fa-shield-alt"></i> <span class="highlight">AutoXploit</span></a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Website Exploits <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="./vulnscan.html">SQL Injection</a></li>
+                        <li><a href="./xssscan.html">XSS Scanner</a></li>
+                        <li><a href="./csrfscan.html">CSRF Scanner</a></li>
+                        <li><a href="./fileupload.html">File Upload Scanner</a></li>
+                        <li><a href="./index.html">Home</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Network Scanning <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="portscanner.html">Port Scanner</a></li>
+                        <li><a href="vulnscan.html">Vulnerability Scanner</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Android Exploits <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="rat.html">RAT (Remote Access Tool)</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Computer Exploits <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="windowsmonitor.html">Windows Monitor</a></li>
+                    </ul>
+                </li>
+                <li id="auth-status"></li>
+                <li id="signup-dashboard"></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Welcome Message -->
+    <div class="welcome-message container">
+        <h3>Hi, <span id="username"></span></h3>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>All Scans</h2>
+        <table id="scansTable">
+            <thead>
+                <tr>
+                    <th>Scan Name</th>
+                    <th>Category</th>
+                    <th>Target URL</th>
+                    <th>Tool Used</th>
+                    <th>Status</th>
+                    <th>Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Scans will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>AutoXploit is a tool designed to help users identify and mitigate vulnerabilities in their systems.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/public/index.html">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: support@autoxploit.com</p>
+                <p>Phone: +123 456 7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 AutoXploit. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        async function fetchScans() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('You must be logged in to view scans.');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner) loadingSpinner.style.display = 'flex';
+
+            try {
+                const response = await fetch('/api/scans', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+
+                if (!response.ok) throw new Error(`Failed to fetch scans. Status: ${response.status}`);
+
+                const scans = await response.json();
+                const scansTableBody = document.querySelector('#scansTable tbody');
+                scansTableBody.innerHTML = '';
+
+                if (scans.length === 0) {
+                    scansTableBody.innerHTML = '<tr><td colspan="6">No scans found.</td></tr>';
+                } else {
+                    scans.forEach(scan => {
+                        const sanitizedScanName = DOMPurify.sanitize(scan.scan_name);
+                        const sanitizedCategory = DOMPurify.sanitize(scan.category);
+                        const sanitizedTargetUrl = DOMPurify.sanitize(scan.target_url);
+                        const sanitizedToolUsed = DOMPurify.sanitize(scan.tool_used);
+                        const sanitizedStatus = scan.is_vulnerable ? 'Vulnerable' : 'Safe';
+
+                        const row = `
+    <tr>
+        <td>${sanitizedScanName}</td>
+        <td>${sanitizedCategory}</td>
+        <td class="tooltip-cell">
+            <span class="tooltip-text" data-tooltip="${sanitizedTargetUrl}">${sanitizedTargetUrl}</span>
+        </td>
+        <td>${sanitizedToolUsed}</td>
+        <td>${sanitizedStatus}</td>
+        <td><button onclick="viewResults('${scan.id}')">View Results</button></td>
+    </tr>
+`;
+
+
+                        scansTableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching scans:', error);
+                alert(`Error: ${error.message}`);
+            } finally {
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+            }
+        }
+
+        function viewResults(scanId) {
+            window.location.href = `/scan-results.html?id=${scanId}`;
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            alert('You have been logged out successfully.');
+            window.location.href = '/index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('username').textContent = username;
+            }
+        });
+    </script>
+</body>
+</html>

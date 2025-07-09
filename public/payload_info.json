@@ -1,0 +1,182 @@
+{
+  "'": {
+      "description": "A single quote is used to test if the application improperly handles user input in SQL queries.",
+      "risk_description": "This can cause syntax errors or reveal database structures if not handled properly.",
+      "recommendation": "Sanitize user inputs and use prepared statements."
+  },
+  "''": {
+      "description": "Two single quotes are used to test how the application handles escaped characters.",
+      "risk_description": "Improper escaping can lead to SQL injection vulnerabilities.",
+      "recommendation": "Use parameterized queries and validate all inputs."
+  },
+  "' OR '1'='1": {
+      "description": "This payload injects a logical condition that always evaluates to true.",
+      "risk_description": "Allows attackers to bypass authentication or retrieve unauthorized data.",
+      "recommendation": "Implement proper input validation and use prepared statements."
+  },
+  "' OR '1'='1' --": {
+      "description": "This payload uses an inline comment to terminate the query after injecting a true condition.",
+      "risk_description": "Can bypass authentication or manipulate query logic.",
+      "recommendation": "Use parameterized queries and sanitize inputs."
+  },
+  "' OR '1'='1' /*": {
+      "description": "This payload uses a block comment to terminate the query after injecting a true condition.",
+      "risk_description": "Can bypass authentication or manipulate query logic.",
+      "recommendation": "Use parameterized queries and sanitize inputs."
+  },
+  "' OR 1=1--": {
+      "description": "This payload injects a numeric condition that always evaluates to true.",
+      "risk_description": "Allows attackers to bypass authentication or retrieve unauthorized data.",
+      "recommendation": "Implement proper input validation and use prepared statements."
+  },
+  "' OR 1=1#": {
+      "description": "This payload uses a MySQL-style comment to terminate the query after injecting a true condition.",
+      "risk_description": "Can bypass authentication or manipulate query logic.",
+      "recommendation": "Use parameterized queries and sanitize inputs."
+  },
+  "' OR 1=1/*": {
+      "description": "This payload uses a block comment to terminate the query after injecting a true condition.",
+      "risk_description": "Can bypass authentication or manipulate query logic.",
+      "recommendation": "Use parameterized queries and sanitize inputs."
+  },
+  "admin' --": {
+      "description": "This payload attempts to log in as an admin user by commenting out the rest of the query.",
+      "risk_description": "Can allow unauthorized access to admin accounts.",
+      "recommendation": "Use parameterized queries and validate user inputs."
+  },
+  "admin' #": {
+      "description": "This payload attempts to log in as an admin user using a MySQL-style comment.",
+      "risk_description": "Can allow unauthorized access to admin accounts.",
+      "recommendation": "Use parameterized queries and validate user inputs."
+  },
+  "admin'/*": {
+      "description": "This payload attempts to log in as an admin user using a block comment.",
+      "risk_description": "Can allow unauthorized access to admin accounts.",
+      "recommendation": "Use parameterized queries and validate user inputs."
+  },
+  "' OR '1'='1'{": {
+      "description": "This payload tests improper handling of curly braces in SQL queries.",
+      "risk_description": "Can lead to unexpected behavior or SQL injection.",
+      "recommendation": "Validate inputs and avoid dynamic query construction."
+  },
+  "1' WAITFOR DELAY '0:0:5'--": {
+      "description": "This payload introduces a time delay to test for blind SQL injection vulnerabilities.",
+      "risk_description": "Can be used to infer database structure or perform denial-of-service attacks.",
+      "recommendation": "Use parameterized queries and monitor for unusual delays."
+  },
+  "1'; WAITFOR DELAY '0:0:5'--": {
+      "description": "This payload introduces a time delay after terminating the query with a semicolon.",
+      "risk_description": "Can be used to infer database structure or perform denial-of-service attacks.",
+      "recommendation": "Use parameterized queries and sanitize inputs."
+  },
+  "' OR SLEEP(5) --": {
+      "description": "This payload introduces a time delay using the SLEEP function.",
+      "risk_description": "Can be used to infer database structure or perform denial-of-service attacks.",
+      "recommendation": "Use parameterized queries and monitor for unusual delays."
+  },
+  "' OR SLEEP(5) = '": {
+      "description": "This payload introduces a time delay and compares it to a string.",
+      "risk_description": "Can be used to infer database structure or perform denial-of-service attacks.",
+      "recommendation": "Use parameterized queries and monitor for unusual delays."
+  },
+  "'; EXEC xp_cmdshell('whoami') --": {
+      "description": "This payload attempts to execute system commands via SQL Server's xp_cmdshell.",
+      "risk_description": "Can allow attackers to execute arbitrary commands on the server.",
+      "recommendation": "Disable xp_cmdshell and use least privilege principles."
+  },
+  "' UNION SELECT NULL,NULL,NULL--": {
+      "description": "This payload attempts to retrieve additional data using a UNION query.",
+      "risk_description": "Can expose sensitive data from other tables.",
+      "recommendation": "Use parameterized queries and restrict database permissions."
+  },
+  "' UNION SELECT 1, @@version --": {
+      "description": "This payload retrieves the database version using a UNION query.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Use parameterized queries and restrict database permissions."
+  },
+  "'; EXEC xp_cmdshell('calc.exe') --": {
+      "description": "This payload attempts to execute the calculator application via SQL Server's xp_cmdshell.",
+      "risk_description": "Can allow attackers to execute arbitrary commands on the server.",
+      "recommendation": "Disable xp_cmdshell and use least privilege principles."
+  },
+  "' OR EXISTS(SELECT * FROM users) --": {
+      "description": "This payload checks if a table named 'users' exists.",
+      "risk_description": "Can expose database schema details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND (SELECT COUNT(*) FROM users) > 0 --": {
+      "description": "This payload checks if the 'users' table contains any rows.",
+      "risk_description": "Can expose database schema details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND ASCII(SUBSTRING((SELECT @@version), 1, 1)) > 114 --": {
+      "description": "This payload extracts the first character of the database version using ASCII values.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Use parameterized queries and restrict database permissions."
+  },
+  "' AND 1=(SELECT COUNT(*) FROM tablenames); --": {
+      "description": "This payload checks if a table named 'tablenames' exists.",
+      "risk_description": "Can expose database schema details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "'; WAITFOR DELAY '0:0:10' --": {
+      "description": "This payload introduces a longer time delay to test for blind SQL injection vulnerabilities.",
+      "risk_description": "Can be used to infer database structure or perform denial-of-service attacks.",
+      "recommendation": "Use parameterized queries and monitor for unusual delays."
+  },
+  "' OR 'x'='x' AND 1=(SELECT 1 FROM dual WHERE database() LIKE '%') --": {
+      "description": "This payload tests for MySQL-specific database enumeration.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' OR 'x'='x' AND version() LIKE '% --": {
+      "description": "This payload tests for PostgreSQL-specific database version enumeration.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' OR 'x'='x' AND MID(version(), 1, 1) = '5' --": {
+      "description": "This payload extracts the first character of the database version.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND 'x'='y' AND (SELECT LENGTH(version())) > 0 --": {
+      "description": "This payload retrieves the length of the database version string.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND 1=2 UNION SELECT 1, version(), database() --": {
+      "description": "This payload retrieves the database version and name using a UNION query.",
+      "risk_description": "Can expose sensitive database details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND 1=2 UNION SELECT 1, user(), database() --": {
+      "description": "This payload retrieves the current database user and name using a UNION query.",
+      "risk_description": "Can expose sensitive database details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "1' RLIKE (SELECT (CASE WHEN (ORD(MID((SELECT IFNULL(CAST(database() AS NCHAR),0x20)),1,1))>64) THEN 0x31 ELSE 0x30 END)) AND '1'='1": {
+      "description": "This payload extracts the first character of the database name using bitwise operations.",
+      "risk_description": "Can expose database details to attackers.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND 1=2 UNION SELECT ALL 1,2,3,4,5,6,name FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'tablename')--": {
+      "description": "This payload retrieves column names from a specific table.",
+      "risk_description": "Can expose database schema details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "' AND 1=2 UNION SELECT ALL 1,2,3,4,5,6,7 FROM sysobjects WHERE xtype = 'U' --": {
+      "description": "This payload retrieves user-defined table names from the database.",
+      "risk_description": "Can expose database schema details.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "1' AND 1=0 UNION ALL SELECT 1,NULL,'<script>alert(XSS)</script>',table_name FROM INFORMATION_SCHEMA.TABLES WHERE 2>1--": {
+      "description": "This payload attempts to inject XSS payloads into retrieved table names.",
+      "risk_description": "Can expose database schema details and lead to cross-site scripting attacks.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  },
+  "1' AND 1=0 UNION ALL SELECT 1,NULL,'<script>alert(XSS)</script>',column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE 2>1--": {
+      "description": "This payload attempts to inject XSS payloads into retrieved column names.",
+      "risk_description": "Can expose database schema details and lead to cross-site scripting attacks.",
+      "recommendation": "Restrict database permissions and sanitize inputs."
+  }
+}

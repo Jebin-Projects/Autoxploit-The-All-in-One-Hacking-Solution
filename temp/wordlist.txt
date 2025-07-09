@@ -1,0 +1,7 @@
+admin
+admin admin 
+admin password123
+user1 pass123
+admin admin
+root root123
+test test
