@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 import logging
 import json
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(message)s')  # Only show essential logs
+# Configure LOgging Part
+logging.basicConfig(level=logging.INFO, format='%(message)s')  # Only essential logs shoudl be shown to us
 logger = logging.getLogger()
 
 # Session setup
